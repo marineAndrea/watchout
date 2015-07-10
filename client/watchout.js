@@ -39,7 +39,6 @@ var enemies = range(0, n).map(function (n) {
 });
 
 // Add these enemies to the SVG board using d3
-
 d3.select('svg').selectAll('circle').data(enemies)
   .enter()
   .append('circle')
@@ -47,3 +46,20 @@ d3.select('svg').selectAll('circle').data(enemies)
   .attr('cy', function (d) { return d.y })
   .attr('r', function (d) { return d.r })
   .attr('fill', function (d) { return d.color });
+
+// Create the function that generates the movement
+var moveEnemies = function() {
+  enemies.forEach(function (enemy) {
+    enemy.x = Math.random() * width;
+    enemy.y = Math.random() * height;
+  });
+  return d3.select('svg').selectAll('circle').data(enemies)
+    .transition()
+    .duration(900)
+    .attr('cx', function (d) { return d.x })
+    .attr('cy', function (d) { return d.y });
+};
+
+// Use setTimeOut that takes a function as argument
+
+setInterval(moveEnemies, 1000);
