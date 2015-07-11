@@ -1,0 +1,9 @@
+Reimplement this game, referring to the source code as needed. You should have commits that refer to each of these numbered steps.
+  1) Draw the enemies in an svg element.
+  // Create <svg> element in the index.html file to represent our game board
+    // Add enemies as circle tags to the board
+  2) Make it so that the enemies move to a new random location every second using.
+  3) Make a differently-colored dot to represent the player. Make it draggable.
+  4) Detect when a enemy touches you.
+  5) Keep track of the user's score, and display it.
+Use css3 animations to make the enemies whirling shuriken.
