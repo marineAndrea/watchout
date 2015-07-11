@@ -101,8 +101,10 @@ var moveEnemies = function() {
     .transition()
     .tween('', function (d) {
       var enemyNode = d3.select(this);
+      var collisionFound = false;
       return function () {
-        if (detectCollisions(userNode, enemyNode)){
+        if (!collisionFound && detectCollisions(userNode, enemyNode)){
+          collisionFound = true;
           rest();
         }
       };
