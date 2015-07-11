@@ -2,7 +2,7 @@
 
 // start slingin' some d3 here.
 // define the number of enemies, n
-var n = 12;
+var n = 1;
 var width = 360;
 var height = 240;
 
@@ -21,6 +21,9 @@ var range = function (start, end) {
   }
   return arr;
 };
+
+
+
 
 // define super class
 var Character = function(name, x, y) {
@@ -53,11 +56,13 @@ User.prototype.constructor = User;
 
 
 // Create an array of enemies, each of which is an instance of the class Enemy
+// in order to have d3 get the info on the enemies objects and associate with the DOM
 var enemies = range(0, n).map(function (n) {
   var x = Math.random() * width;
   var y = Math.random() * height;
   return new Enemy(n, x, y);
 });
+
 
 // Add these enemies to the SVG board using d3
 var addTag = function(circleType, circleData) {
@@ -73,6 +78,8 @@ var addTag = function(circleType, circleData) {
 };
 
 var user = new User();
+
+// enemiesNodes and userNode are d3 objects
 var enemiesNodes = addTag('enemy', enemies);
 var userNode = addTag('user', [user]);
 
@@ -127,9 +134,22 @@ var moveEnemies = function() {
 
 setInterval(moveEnemies, 1000);
 
-// Create function to move user
-var moveUser = function(){
 
+
+var detectCollisions = function () {
+  // iterate across all the enemies dots
+  var userX = userNode.attr('cx');
+  var userY = userNode.attr('cy');
+  var collisionFound = false;
+  enemiesNodes.each(function (enemy) {
+    // debugger;
+    var enemyX = enemy.x;
+    var enemyY = enemy.y;
+    var distance = Math.sqrt(Math.pow((enemyX - userX), 2) + Math.pow((enemyY - userY), 2));
+    if (distance < (+userNode.attr('r') + enemy.r)) console.log('bam!');
+  });
+    // check to see if any of their location is within a certain distance of the user
+    // if so alert "bam!!!"
 };
 
-// Add mouseDown event handling to the userNode
+setInterval(detectCollisions, 100);
